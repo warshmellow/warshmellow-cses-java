@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class TrailingZeros {
+public class Repetitions {
     static class FastReader {
         BufferedReader br;
         StringTokenizer st;
@@ -46,18 +46,27 @@ public class TrailingZeros {
         }
     }
 
-    private static Integer f(int n, int k) {
-        int count = 0;
-        for (int i = k; n / i >= 1; i *= k) {
-            count += n / i;
+    private static Integer f(String s) {
+        int i = 0;
+        int maxLen = 1;
+        int currLen = 1;
+
+        for (int j = 1; j < s.length(); j++) {
+            if (s.charAt(i) == s.charAt(j)) {
+                currLen++;
+            } else {
+                maxLen = Math.max(maxLen, currLen);
+                i = j;
+                currLen = 1;
+            }
         }
-        return count;
+        maxLen = Math.max(maxLen, currLen);
+        return maxLen;
     }
 
     public static void main(String[] args) {
         FastReader input = new FastReader();
-        int n = input.nextInt();
-
-        System.out.println(f(n, 5));
+        String s = input.next();
+        System.out.println(f(s));
     }
 }
